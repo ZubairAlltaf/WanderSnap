@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="edt">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>edt</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Firebase Modular SDK (v9+) -->
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
+    import { getAuth, RecaptchaVerifier } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js';
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBJFjm995zypptPCVEtyzAmbKWZcHhAI3Q",
+      authDomain: "edt-user.firebaseapp.com",
+      projectId: "edt-user",
+      storageBucket: "edt-user.firebasestorage.app",
+      messagingSenderId: "686133670451",
+      appId: "1:686133670451:web:8250ac0dd3b9b241d02946",
+      measurementId: "G-T5TZ1QC4SH"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Set up reCAPTCHA verifier
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      'size': 'invisible', // Or 'normal' for visible reCAPTCHA
+      'callback': (response) => {
+        console.log("reCAPTCHA solved:", response);
+      },
+      'expired-callback': () => {
+        console.log("reCAPTCHA expired");
+      }
+    });
+
+    // Expose auth and verifier to Flutter
+    window.firebaseAuth = auth;
+  </script>
+</head>
+<body>
+<!-- Container for reCAPTCHA -->
+<div id="recaptcha-container"></div>
+<script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
